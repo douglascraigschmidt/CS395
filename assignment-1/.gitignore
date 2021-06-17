@@ -1,0 +1,15 @@
+.idea
+/gradle
+gradlew
+gradlew.bat
+/submission-packages
+.autograder
+.private
+.project
+.classpath
+.settings
+.gradle
+.DS_Store
+videos
+bin
+build
