@@ -1,0 +1,283 @@
+swagger: '2.0'
+info:
+  description: An API for course registration
+  title: Assignment API
+  version: '1.0'
+  license:
+    name: Apache 2 License
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+host: 'localhost:8080'
+basePath: /
+tags:
+  - name: Course Registration
+    description: Registration Controller
+paths:
+  /api/1.0/course:
+    get:
+      tags:
+        - Course Registration
+      summary: Returns a list of all courses that are available for students to register for
+      operationId: getCoursesUsingGET
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Course'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - Course Registration
+      summary: Creates a new course that students can register for
+      operationId: addCourseUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: course
+          description: course
+          required: true
+          schema:
+            $ref: '#/definitions/Course'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Course'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/1.0/course/{courseId}':
+    get:
+      tags:
+        - Course Registration
+      summary: Returns the lists of students that are registered for a given course
+      operationId: getStudentsInCourseUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: courseId
+          in: path
+          description: courseId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Student'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - Course Registration
+      summary: Registers a student for a course
+      operationId: addStudentToCourseUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: courseId
+          in: path
+          description: courseId
+          required: true
+          type: integer
+          format: int64
+        - name: studentId
+          in: query
+          description: studentId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Course'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - Course Registration
+      summary: Removes a course from the registration system -- you are free to choose what happens to any students that have already registered
+      operationId: removeCourseUsingDELETE
+      produces:
+        - '*/*'
+      parameters:
+        - name: courseId
+          in: path
+          description: courseId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Course'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/api/1.0/course/{courseId}/{studentId}':
+    delete:
+      tags:
+        - Course Registration
+      summary: Removes a student from a course
+      operationId: removeStudentFromClassUsingDELETE
+      produces:
+        - '*/*'
+      parameters:
+        - name: courseId
+          in: path
+          description: courseId
+          required: true
+          type: integer
+          format: int64
+        - name: studentId
+          in: path
+          description: studentId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/1.0/student:
+    get:
+      tags:
+        - Course Registration
+      summary: Returns the list of all students in the registration system
+      operationId: getStudentsUsingGET
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Student'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - Course Registration
+      summary: Adds a new student that can register for courses
+      operationId: addStudentUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: student
+          description: student
+          required: true
+          schema:
+            $ref: '#/definitions/Student'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Student'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/1.0/student/{studentId}':
+    delete:
+      tags:
+        - Course Registration
+      summary: Removes a student from the registration system -- you are free to choose any behavior you want for how existing registrations for the student are handled
+      operationId: removeStudentUsingDELETE
+      produces:
+        - '*/*'
+      parameters:
+        - name: studentId
+          in: path
+          description: studentId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Student'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+definitions:
+  Course:
+    type: object
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+        format: int64
+      title:
+        type: string
+    title: Course
+  Student:
+    type: object
+    properties:
+      firstName:
+        type: string
+      id:
+        type: integer
+        format: int64
+      lastName:
+        type: string
+      profilePhotoUrl:
+        type: string
+    title: Student
