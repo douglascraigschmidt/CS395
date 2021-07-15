@@ -7,8 +7,6 @@ import edu.vanderbilt.imagecrawler.utils.Crawler;
 import edu.vanderbilt.imagecrawler.utils.Image;
 import edu.vanderbilt.imagecrawler.utils.WebPageElement;
 
-import static edu.vanderbilt.imagecrawler.utils.Crawler.Type.IMAGE;
-import static edu.vanderbilt.imagecrawler.utils.Crawler.Type.PAGE;
 import static edu.vanderbilt.imagecrawler.utils.Student.isGraduate;
 import static edu.vanderbilt.imagecrawler.utils.Student.isUndergraduate;
 
@@ -84,10 +82,10 @@ public class SequentialLoopsCrawler // Loaded via reflection
             int[] imageCount = new int[1];
 
             // Loop through all hyperlinks on this page.
-            page.getPageElements(IMAGE, PAGE).forEach(e -> {
+            page.getPageElements(Crawler.Type.IMAGE, Crawler.Type.PAGE).forEach(e -> {
                 // Recursively visit all the hyperlinks on this page and
                 // add the result to the array.
-                if (e.getType() == IMAGE) {
+                if (e.getType() == Crawler.Type.IMAGE) {
                     imageCount[0] += processImage(e.getURL());
                 } else {
                     imageCount[0] += performCrawl(e.getUrl(), depth + 1);
@@ -101,10 +99,10 @@ public class SequentialLoopsCrawler // Loaded via reflection
             int imageCount = 0;
 
             // Iterate through all hyperlinks on this page.
-            for (WebPageElement e : page.getPageElements(IMAGE, PAGE)) {
+            for (WebPageElement e : page.getPageElements(Crawler.Type.IMAGE, Crawler.Type.PAGE)) {
                 // Recursively visit all the hyperlinks on this page and
                 // add the result to the array.
-                if (e.getType() == IMAGE) {
+                if (e.getType() == Crawler.Type.IMAGE) {
                     imageCount += processImage(e.getURL());
                 } else {
                     imageCount += performCrawl(e.getUrl(), depth + 1);
@@ -125,6 +123,7 @@ public class SequentialLoopsCrawler // Loaded via reflection
      * @param url A image url to download and process.
      * @return The count of transformed images.
      */
+    @SuppressWarnings("NewApi")
     protected int processImage(URL url) {
         // Uses a Java 7 features to:
         // 1. Loop through all transforms

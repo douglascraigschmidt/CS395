@@ -1,16 +1,11 @@
 package edu.vanderbilt.imagecrawler.crawlers;
 
 import java.net.URL;
-import java.util.Optional;
 
 import edu.vanderbilt.imagecrawler.utils.Crawler;
 import edu.vanderbilt.imagecrawler.utils.Image;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
-
-import static edu.vanderbilt.imagecrawler.utils.Crawler.Type.IMAGE;
-import static edu.vanderbilt.imagecrawler.utils.Crawler.Type.PAGE;
 
 /**
  * This class uses Project Reactor Flux and Mono reactive types to
@@ -43,8 +38,7 @@ public class ReactorCrawler
             // Crawl the page using the specified uri and depth.
             
 
-            // Count the number of elements in the stream of
-            // observables.
+            // Count the number of elements in the Flux stream.
             
 
             // Return 0 if any exception is encountered.
@@ -69,7 +63,7 @@ public class ReactorCrawler
     protected Flux<Image> crawlPageAsync(String pageUri, int depth) {
         // Return a Flux stream of images from this page and all page
         // links recursively reachable from it.  Return an empty
-        // Observable if the depth limit of the web crawling is
+        // Flux if the depth limit of the web crawling is
         // reached or if the pageUri has already been visited.  This
         // method should use Flux operators like just(), filter(),
         // map(), and flatMap() (this latter operator should call
@@ -78,7 +72,7 @@ public class ReactorCrawler
         // TODO -- you fill in here replacing this statement with your
         // solution.
         return null;
-            // Create an Observable that emits this pageUri.
+            // Create an Flux that emits this pageUri.
             
 
             // Filter out page if it exceeds the depth or has already
@@ -89,7 +83,7 @@ public class ReactorCrawler
             
 
             // Apply the flatMap() concurrency idiom to convert each
-            // page to an Observable stream of images asynchronously.
+            // page to an Flux stream of images asynchronously.
             
     }
 
@@ -131,7 +125,7 @@ public class ReactorCrawler
         // TODO -- you fill in here replacing this statement with your
         // solution.
         return null;
-            // Convert the list of page links into an Observable
+            // Convert the list of page links into an Flux
             // stream of page links.
             
 
@@ -193,7 +187,7 @@ public class ReactorCrawler
         // TODO -- you fill in here replacing this statement with your
         // solution.
         return null;
-            // Create an Observable that emits the URL.
+            // Create an Flux that emits the URL.
             
 
             // Run computation in the parallel scheduler.
@@ -211,7 +205,7 @@ public class ReactorCrawler
 
     /**
      * Applies the current set of crawler transforms on the passed
-     * image and returns an Observable stream of all successfully
+     * image and returns a {@link Flux} stream of all successfully
      * transformed images.
      *
      * @param image The image to transform
