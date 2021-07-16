@@ -26,7 +26,6 @@ import edu.vanderbilt.imagecrawler.utils.ConcurrentHashSet;
 import edu.vanderbilt.imagecrawler.utils.Crawler;
 import edu.vanderbilt.imagecrawler.utils.ExceptionUtils;
 import edu.vanderbilt.imagecrawler.utils.Image;
-import edu.vanderbilt.imagecrawler.utils.UnsynchronizedArray;
 import edu.vanderbilt.imagecrawler.utils.WebPageCrawler;
 
 /**
@@ -225,13 +224,13 @@ public abstract class ImageCrawler
     protected abstract int performCrawl(String pageUri, int depth);
 
     /**
-     * Return an array of all the IMG SRC URLs in this document.
+     * Return a List of all the IMG SRC URLs in this document.
      */
     @NotNull
-    protected Array<URL> getImagesOnPage(Crawler.Page page) {
+    protected List<URL> getImagesOnPage(Crawler.Page page) {
         log("Getting images on page ...");
-        // Create an Array to store the results.
-        Array<URL> results = new UnsynchronizedArray<>();
+        // Create an ArrayList to store the results.
+        List<URL> results = new ArrayList<>();
 
         // Return an array of all the IMG SRC URLs in this page.
         page
@@ -245,10 +244,10 @@ public abstract class ImageCrawler
                 .distinct()
 
                 // Trigger intermediate operations and add elements to the
-                // array.
+                // ArrayList.
                 .forEach(results::add);
 
-        // Return the array.
+        // Return the List.
         return results;
     }
 
