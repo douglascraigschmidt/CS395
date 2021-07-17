@@ -9,6 +9,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
 import org.assertj.core.api.Assertions.assertThat
 import reactor.core.publisher.Flux
+import kotlin.collections.ArrayList
 import reactor.core.publisher.Mono
 import reactor.core.scheduler.Schedulers
 import org.junit.Test
@@ -47,7 +48,7 @@ class ReactorCrawlerTests : AssignmentTests() {
     lateinit var mockTransforms: List<Transform>
 
     @MockK
-    lateinit var mockStringArray: CustomArray<String>
+    lateinit var mockStringArray: List<String>
 
     @MockK
     lateinit var mockCrawlerPageFlux: Flux<Crawler.Page>
@@ -166,7 +167,7 @@ class ReactorCrawlerTests : AssignmentTests() {
     fun `imagesOnPageLinksAsync uses the expected Project Reactor inner chained method calls`() {
         every {
             mockPage.getPageElementsAsStrings(any())
-        } returns UnsynchronizedArray(listOf("a", "b", "c"))
+        } returns ArrayList(listOf("a", "b", "c"))
 
         val o = mockk<Flux<Image>>()
 
@@ -208,7 +209,7 @@ class ReactorCrawlerTests : AssignmentTests() {
         val url2 = URL("http://www.dummy.url-2")
         val url3 = URL("http://www.dummy.url-3")
         val urls = listOf(url1, url2, url3)
-        every { mockPage.getPageElementsAsUrls(any()) } returns UnsynchronizedArray(urls)
+        every { mockPage.getPageElementsAsUrls(any()) } returns ArrayList(urls)
         every { spyCrawler.getOrDownloadImage(url1) } returns mockImage
         every { spyCrawler.getOrDownloadImage(url2) } returns null
         every { spyCrawler.getOrDownloadImage(url3) } returns mockImage
@@ -244,7 +245,7 @@ class ReactorCrawlerTests : AssignmentTests() {
         val url2 = URL("http://www.dummy.url-2")
         val url3 = URL("http://www.dummy.url-3")
         val urls = listOf(url1, url2, url3)
-        every { mockPage.getPageElementsAsUrls(any()) } returns UnsynchronizedArray(urls)
+        every { mockPage.getPageElementsAsUrls(any()) } returns ArrayList(urls)
         every { spyCrawler.getOrDownloadImage(url1) } returns mockImage
         every { spyCrawler.getOrDownloadImage(url2) } returns null
         every { spyCrawler.getOrDownloadImage(url3) } returns mockImage

@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -46,8 +48,8 @@ public class DirectoryCrawler implements Crawler {
         }
 
         @Override
-        public Array<WebPageElement> getPageElements(Type... types) {
-            Array<WebPageElement> results = new UnsynchronizedArray<>();
+        public List<WebPageElement> getPageElements(Type... types) {
+            List<WebPageElement> results = new ArrayList<>();
 
             if (isUndergraduate()) {
                 getPageElementsAsStrings(types)
@@ -63,8 +65,8 @@ public class DirectoryCrawler implements Crawler {
         }
 
         @Override
-        public Array<URL> getPageElementsAsUrls(Type... types) {
-            Array<URL> results = new UnsynchronizedArray<>();
+        public List<URL> getPageElementsAsUrls(Type... types) {
+            List<URL> results = new ArrayList<>();
 
             if (isUndergraduate()) {
                 getPageElementsAsStrings(types)
@@ -86,15 +88,15 @@ public class DirectoryCrawler implements Crawler {
         }
 
         @Override
-        public Array<String> getPageElementsAsStrings(Type... types) {
+        public List<String> getPageElementsAsStrings(Type... types) {
             ImageCrawler.throwExceptionIfCancelled();
 
             File[] files = mDirectory.listFiles();
             if (files == null || files.length == 0) {
-                return new UnsynchronizedArray<>();
+                return new ArrayList<>();
             }
 
-            Array<String> results = new UnsynchronizedArray<>();
+            List<String> results = new ArrayList<>();
 
             Arrays.stream(types)
                     .flatMap(type -> {

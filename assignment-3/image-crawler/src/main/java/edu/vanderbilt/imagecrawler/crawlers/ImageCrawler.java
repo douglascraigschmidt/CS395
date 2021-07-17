@@ -229,7 +229,7 @@ public abstract class ImageCrawler
     @NotNull
     protected List<URL> getImagesOnPage(Crawler.Page page) {
         log("Getting images on page ...");
-        // Create an ArrayList to store the results.
+        // Create an Array to store the results.
         List<URL> results = new ArrayList<>();
 
         // Return an array of all the IMG SRC URLs in this page.
@@ -244,7 +244,7 @@ public abstract class ImageCrawler
                 .distinct()
 
                 // Trigger intermediate operations and add elements to the
-                // ArrayList.
+                // List.
                 .forEach(results::add);
 
         // Return the List.

@@ -6,6 +6,8 @@ import org.jsoup.nodes.Document;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 import java.util.function.Function;
 
@@ -126,10 +128,10 @@ public class WebPageCrawler implements Crawler {
         }
 
         @Override
-        public Array<WebPageElement> getPageElements(Type... types) {
+        public List<WebPageElement> getPageElements(Type... types) {
             ImageCrawler.throwExceptionIfCancelled();
 
-            Array<WebPageElement> results = new UnsynchronizedArray<>();
+            List<WebPageElement> results = new ArrayList<>();
 
             Arrays.stream(types)
                     .flatMap(type -> {
@@ -149,8 +151,8 @@ public class WebPageCrawler implements Crawler {
         }
 
         @Override
-        public Array<URL> getPageElementsAsUrls(Type... types) {
-            Array<URL> results = new UnsynchronizedArray<>();
+        public List<URL> getPageElementsAsUrls(Type... types) {
+            List<URL> results = new ArrayList<>();
 
             if (isUndergraduate()) {
                 getPageElementsAsStrings(types)
@@ -172,8 +174,8 @@ public class WebPageCrawler implements Crawler {
         }
 
         @Override
-        public Array<String> getPageElementsAsStrings(Type... types) {
-            Array<String> results = new UnsynchronizedArray<>();
+        public List<String> getPageElementsAsStrings(Type... types) {
+            List<String> results = new ArrayList<>();
 
             if (isUndergraduate()) {
                 getPageElements(types)
@@ -199,7 +201,7 @@ public class WebPageCrawler implements Crawler {
             System.out.println("      Searching For: " + type.name());
         }
 
-        private void __printSearchResults(Array<String> results, Document doc) {
+        private void __printSearchResults(List<String> results, Document doc) {
             if (!Controller.loggingEnabled()) {
                 return;
             }
