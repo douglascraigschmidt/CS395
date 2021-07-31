@@ -40,22 +40,21 @@ public class ReactorCrawler
     @Override
     protected int performCrawl(String pageUri, int depth) {
         // Call the crawlPageAsync() helper method to perform the
-        // crawl asynchronously, obtain a count of the number of
-        // images downloaded/processed, wait until all the processing
-        // is done, and return the result as an int value.  If any
-        // error/exception is encountered return 0.
+        // crawl asynchronously and then obtain a count of the number
+        // of images downloaded/processed, wait until all the
+        // processing is done, and return the result as an int value.
+        // If any error/exception is encountered return 0.
 
         // TODO -- you fill in here replacing this statement with your
         // solution.
         return 0;
                 // Crawl the page using the specified uri and depth.
 
-                        // Count the number of elements in the stream of
-                        // observables.
+                // Count the number of elements in the Flux stream.
 
-                        // Return 0 if any exception is encountered.
+                // Return 0 if any exception is encountered.
 
-                        // Block to get the result.
+                // Block to get the result.
 
                 // Convert the result to an int primitive.
     }
@@ -71,17 +70,17 @@ public class ReactorCrawler
      */
     protected Flux<Image> crawlPageAsync(String pageUri, int depth) {
         // Return a Flux stream of images from this page and all page
-        // links recursively reachable from it.  Return an empty
-        // Observable if the depth limit of the web crawling is
-        // reached or if the pageUri has already been visited.  This
-        // method should use Flux operators like just(), filter(),
-        // map(), and flatMap() (this latter operator should call
+        // links recursively reachable from it.  Return an empty Flux
+        // if the depth limit of the web crawling is reached or if the
+        // pageUri has already been visited.  This method should use
+        // Flux operators like just(), filter(), map(), and flatMap()
+        // (this latter operator should call the helper method
         // imagesOnPageAndPageLinksAsync()).
 
         // TODO -- you fill in here replacing this statement with your
         // solution.
         return null;
-                // Create an Observable that emits this pageUri.
+                // Create a Flux that emits this pageUri.
 
                 // Filter out page if it exceeds the depth or has already
                 // been visited.
@@ -89,7 +88,7 @@ public class ReactorCrawler
                 // Map the url to a page.
 
                 // Apply the flatMap() concurrency idiom to convert each
-                // page to an Observable stream of images asynchronously.
+                // page to a Flux stream of images asynchronously.
     }
 
     /**
@@ -102,17 +101,18 @@ public class ReactorCrawler
     protected Flux<Image> imagesOnPageAndPageLinksAsync(Crawler.Page page,
                                                         int depth) {
         // Return a Flux stream consisting of all images on this page
-        // and any images linked on it.  This method should call
-        // imagesOnPageLinks() and imagesOnPage() and use Flux
-        // operators mergeWith() and subscribeOn() to merge all the
-        // images into a single Flux stream via a parallel Scheduler.
+        // and any images linked on it.  This method should call the
+        // imagesOnPageLinks() and imagesOnPage() helper methods and
+        // use Flux operators mergeWith() and subscribeOn() to merge
+        // all the images into a single Flux stream via a parallel
+        // Scheduler.
 
         // TODO -- you fill in here replacing this statement with your
         // solution.
         return null;
         // Run computations in the parallel scheduler.
 
-        // Merge images with an Observable stream of all images on
+        // Merge images with a Flux stream of all images on
         // this page.
     }
 
@@ -127,14 +127,15 @@ public class ReactorCrawler
                                                  int depth) {
         // Create and return a Flux stream consisting of images that
         // have been downloaded and transformed.  This method should
-        // call crawlPageAsync() recursively and use Flux operators
-        // like fromIterable(), flatMap(), and subscribeOn() to
-        // perform the processing on the parallel Scheduler.
+        // call the crawlPageAsync() helper method recursively and use
+        // Flux operators like fromIterable(), flatMap(), and
+        // subscribeOn() to perform the processing on the parallel
+        // Scheduler.
 
         // TODO -- you fill in here replacing this statement with your
         // solution.
         return null;
-                // Convert the list of page links into an Observable
+                // Convert the list of page links into a Flux
                 // stream of page links.
 
                 // Apply the flatMap() concurrency idiom to map each page
@@ -150,12 +151,12 @@ public class ReactorCrawler
      */
     protected Flux<Image> imagesOnPageAsync(Crawler.Page page) {
         // Create and return a Flux stream for this page using the
-        // Flux flatMap() concurrency idiom.  It should call helper
-        // methods getPageElementsAsUrls(), downloadImageAsync(), and
-        // transformImageAsync(), as well as use Flux operators like
-        // flatmap() and fromIterable() perform processing on the
-        // parallel scheduler.  The flatMap() operator can be called
-        // more than once.
+        // Flux flatMap() concurrency idiom.  It should call the
+        // getPageElementsAsUrls(), downloadImageAsync(), and
+        // transformImageAsync() helper methods, as well as use Flux
+        // operators like flatmap() and fromIterable() to perform
+        // processing on the parallel scheduler.  The flatMap()
+        // operator can be called more than once.
 
         // TODO -- you fill in here replacing this statement with your
         // solution.
@@ -180,7 +181,7 @@ public class ReactorCrawler
      */
     protected Mono<Image> downloadImageAsync(URL url) {
         // Create and return a Mono instance that emits the download
-        // image at the specified URL. It should call the helper
+        // image at the specified URL.  It should call the helper
         // method getOrDownloadImage(), as well as use Mono operators
         // like fromCallable(), mapNotNull(), and subscribeOn() to
         // perform processing on the parallel scheduler.
@@ -188,7 +189,7 @@ public class ReactorCrawler
         // TODO -- you fill in here replacing this statement with your
         // solution.
         return null;
-                // Create an Observable that emits the URL.
+                // Create a Flux that emits the URL.
 
                 // Run computation in the parallel scheduler.
 
@@ -213,18 +214,18 @@ public class ReactorCrawler
 
     /**
      * Locally applies the current set of crawler transforms on the
-     * passed image and returns an Observable stream of all successfully
+     * passed image and returns a Flux stream of all successfully
      * transformed images.
      *
      * @param image The image to transform
      * @return A {@link Flux} that emits non-null transformed images
      */
     protected Flux<Image> transformImageLocally(Image image) {
-        // Run transforms locally returning a Flux stream of
-        // transformed images.  Return a Flux stream of transformed
-        // images.  This method should call the createNewCacheItem()
-        // and applyTransform() helper methods, as well as use Flux
-        // operators like fromIterable(), filter(), and mapNotNull().
+        // Process transforms locally and return a Flux stream of
+        // transformed images.  This method should call the
+        // createNewCacheItem() and applyTransform() helper methods,
+        // as well as use Flux operators like fromIterable(),
+        // filter(), and mapNotNull().
 
         // TODO -- you fill in here replacing this statement with
         // your solution.
@@ -248,13 +249,12 @@ public class ReactorCrawler
      * @return A {@link Flux} that emits transformed {@link Image} objects
      */
     protected Flux<Image> transformImageRemotely(Image image) {
-        // Run transforms remotely returning a Flux stream of
-        // transformed images.  Return a Flux stream of transformed
-        // images.  This method should call the
+        // Process transforms remotely and return a Flux stream of
+        // transformed images.  This method should call the
         // buildMultipartBodyPart(), getTransformNames(),
-        // applyReactorTransforms(), and createImage() helper methods, as
-        // well as use Mono and Flux operators, such as flatMapMany()
-        // and map(), respectively.
+        // applyReactorTransforms(), and createImage() helper methods,
+        // as well as use Mono and Flux operators, such as
+        // flatMapMany() and map(), respectively.
 
         // Get remote microservices API instance.
         RemoteDataSource.TransformApi api = getRemoteDataSource().getApi();
