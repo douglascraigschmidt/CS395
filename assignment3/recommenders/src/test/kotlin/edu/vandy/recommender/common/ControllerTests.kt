@@ -7,9 +7,9 @@ import edu.vandy.recommender.common.Constants.EndPoint.*
 import edu.vandy.recommender.common.Constants.Params.MAX_COUNT_PARAM
 import edu.vandy.recommender.common.Constants.Params.WATCHED_MOVIE_PARAM
 import edu.vandy.recommender.common.model.Ranking
-import edu.vandy.recommender.microservice.sequentialstream.SequentialStreamApplication
-import edu.vandy.recommender.microservice.sequentialstream.SequentialStreamController
-import edu.vandy.recommender.microservice.sequentialstream.SequentialStreamService
+import edu.vandy.recommender.microservice.parallelflux.ParallelFluxApplication
+import edu.vandy.recommender.microservice.parallelflux.ParallelFluxController
+import edu.vandy.recommender.microservice.parallelflux.ParallelFluxService
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.verify
@@ -29,9 +29,9 @@ import java.util.function.Supplier
 
 @SpringBootTest(
     classes = [
-        SequentialStreamApplication::class,
-        SequentialStreamService::class,
-        SequentialStreamController::class
+        ParallelFluxApplication::class,
+        ParallelFluxService::class,
+        ParallelFluxController::class
     ],
     webEnvironment = SpringBootTest.WebEnvironment.MOCK
 )
@@ -45,7 +45,7 @@ class ControllerTests {
     private lateinit var objectMapper: ObjectMapper
 
     @MockkBean
-    lateinit var service: SequentialStreamService
+    lateinit var service: ParallelFluxService
 
     @MockkBean
     lateinit var runTimer: RunTimer
